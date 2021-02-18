@@ -11,7 +11,7 @@ import '../assets/styles/Media.scss'
 
 const API = 'http://localhost:3000/initalState/'
 
-const App = () => {
+const Home = () => {
   const initialState = useInitialState(API)
   console.log(initialState)
   return initialState.length === 0 ? <h1>Loading...</h1> : (
@@ -51,4 +51,4 @@ const App = () => {
     </div>
 )}
 
-export default App
+export default Home
