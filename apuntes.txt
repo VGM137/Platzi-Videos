@@ -1,0 +1,208 @@
+Añadir React a nuestros proyectos:
+
+    npm install react react-dom
+
+
+Añadir babel:
+
+    npm install @babel/core babel-loader @babel/preset-env @babel/preset-react --save -dev
+
+    Esto es similar a la instalación de webpackage.
+
+    Posteriormente hay que añadir un archivo para las configuraciones de babel en la raíz de la app,  llamado .babelrc. Esto nos va a servir para trabajar con ECMAScript 5 y 6, react y .jsx al compilar la app
+
+
+Webpack
+
+    Para instalar webpack debemos correr en terminal el siguiente comando:
+
+        npm install webpack webpack-cli html-webpack-plugin html-loader --save-dev
+
+
+    Para instalar un servidor de desarrollo de webpack usamos el siguiente comando
+
+      	npm install --save-dev webpack-dev-server
+
+
+Preprocesador SASS
+
+    Los preprocesadores como Sass son herramientas que nos permiten escribir CSS con una sintaxis un    poco diferente y más amigable que luego se transformará en CSS normal. Gracias a Sass podemos   escribir CSS con variables, mixins, bucles, entre otras características.
+
+    Instalación de Sass:
+
+    npm install --save-dev mini-css-extract-plugin css-loader node-sass sass-loader
+
+    Configuración de Sass en Webpack (webpack.config.js):
+
+    const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+    // ...
+
+    module: {
+      rules: [
+        {
+          test: /\.(s*)css$/,
+          use: [
+            { loader: MiniCssExtractPlugin.loader },
+            'css-loader',
+            'sass-loader',
+          ],
+        }, 
+      ],
+    },
+
+    // ...
+
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: 'assets/[name].css',
+      }),
+    ],`
+
+
+Eslint y .gitignore
+
+    El Git Ignore es un archivo que nos permite definir qué archivos NO queremos publicar en nuestros     repositorios. Solo debemos crear el archivo .gitignore y escribir los nombres de los archivos y/o     carpetas que no queremos publicar.
+    Los linters como ESLint son herramientas que nos ayudan a seguir buenas prácticas o guías de estilo     de nuestro código.
+    Se encargan de revisar el código que escribimos para indicarnos dónde tenemos errores o posibles    errores. En algunos casos también pueden solucionar los errores automáticamente. De esta manera   podemos solucionar los errores incluso antes de que sucedan.
+    Instalación de ESLint:
+
+      npm install --save-dev eslint babel-eslint eslint-config-airbnb eslint-plugin-import    eslint-plugin-react eslint-plugin-jsx-a11y
+
+    Podemos configurar las reglas de ESLint en el archivo .eslintrc.
+
+
+File Loader
+
+    Vamos a usar File Loader para acceder a las imágenes de nuestro proyecto desde el código.
+
+    Inicialmente, estos archivos estáticos se encuentran junto al código de desarrollo. Pero al momento de compilar, Webpack guardará las imágenes en una nueva carpeta junto al código para producción y actualizará nuestros componentes (o donde sea que usemos las imágenes) con los nuevos nombres y rutas de los archivos.
+
+    Para Traer archivos como imagenes con webpack debemos instalar:
+      npm install file-loader --save-dev
+
+      Configuración de File Loader en Webpack (webpack.config.js):
+
+    rules: [
+      {
+        test: /\.(png|gif|jpg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: { name: 'assets/[hash].[ext]' },
+          }
+        ],
+      },
+    ],
+    Uso de File Loader con React:
+
+    import React from 'react';
+    import nombreDeLaImagen from '../assets/static/nombre-del-archivo';
+
+    const Component = () => (
+      <img src={nombreDeLaImagen} />
+    );
+
+    export default Component;
+
+
+JSON server
+
+    Vamos a usar JSON Server para crear una Fake API: una API ““falsa”” construida a partir de un     archivo JSON que nos permite preparar nuestro código para consumir una API de verdad en el futuro.
+
+    Instalación de JSON Server:
+
+      sudo npm install json-server -g
+
+    Recuerda que en Windows debes correr tu terminal de comandos en modo administrador.
+
+    Ejecutar el servidor de JSON Server:
+
+      json-server archivoParaTuAPI.json
+
+React Hooks
+
+    React Hooks: una característica de React disponible a partir de la versión 16.8 que nos permite agregar estado y ciclo de vida a nuestros componentes creados como funciones.
+
+PropTypes
+
+    Instalación de PropTypes:
+
+    npm install --save prop-types
+    Uso de PropTypes:
+
+    import React from 'react';
+    import PropTypes from 'prop-types';
+
+    const Component = ({ name, lastName, age, list }) => {
+      // ...
+    };
+
+    Component.propTypes = {
+      name: PropTypes.string,
+      lastName: PropTypes.string,
+      age: PropTypes.number,
+      list: PropTypes.array,
+    };
+
+    export default Component;
+    Por defecto, enviar todas nuestras props es opcional, pero con los propTypes podemos especificar    cuáles props son obligatorias para que nuestro componente funcione correctamente con el atributo    isRequired.
+
+    Component.propTypes = {
+      name: PropTypes.string.isRequired, // obligatorio
+      lastName: PropTypes.string.isRequired, // obligatorio
+      age: PropTypes.number, // opcional,
+      list: PropTypes.array, // opcional
+    };
+
+React Router y Redux
+
+  React Router es la librería que nos va a permitir manejar rutas dentro de nuestra aplicación:
+    
+    npm install react-router-dom --save
+
+  Redux
+
+    npm install redux react-redux --save
+
+    Redux nos permite tener un contenedor predecible del estado en aplicaciones creadas con JavaScript, Nos ayuda a escribir aplicaciones que se comportan de una manera consistente, Esto significa que podemos utilizar esta lógica en aplicaciones del lado del cliente, trabajar del lado del servidor o crear aplicaciones para dispositivos móviles.
+
+    Es una librería escrita en JS creada por Dan Abramov y Andrew Clark basada en la arquitectura flux propuesta por FB e inspirada en Elm un lenguaje funcional.
+      Tres principios fundamentales
+        1.- Única fuente de la verdad:
+              Nuestra aplicación solo debe de tener un único Store y es la única fuente de información.
+        2.- El estado es de solo lectura:
+              La única forma de modificar el estado es emitiendo un acción, este objeto describe lo que va a ocurrir.
+        3.- Los cambios se realizan con funciones puras:
+              Para realizar cambios al estado es necesario utilizar Reducers los cuales son funciones puras que toman el estado anterior, una acción y devuelve un nuevo estado con las modificaciones necesarias.
+    
+    Con Redux vamos a poder manejar el flujo de información de nuestra aplicación. 
+
+    React redux contiene un provider que nos va a permitir encapsular nuestros componentes por medio de un conect que va a contener toda la información del store y nos va permitir extraer el estado de nuestra aplicación.
+
+    Creando el Store de Redux
+      Para crear un Store necesitamos llamar a la función createStore del paquete de redux pasándole los parámetros del reducer y initialState.
+
+      Para conectar un componente a Redux vamos a necesitar importar connect de react-redux, connect va a aceptar dos parámetros:
+        mapStateToProps: 
+          es una función que le va a indicar al provider qué información necesitamos del store.
+          
+        mapDispatchToProps: 
+          es un objeto con las distintas funciones para ejecutar una action en Redux.
+  
+  Cuando conectamos un componenete con Redux hay que pensar inmediatamente en crear una acción que va a mandar la informacion de los inputs a nuestro estado.
+
+
+Gravatar
+
+  Your Gravatar is an image and public profile that follows you from site to site appearing beside your name when you do things like comment or post on a blog. Avatars help identify your posts on blogs and web forums, so why not on any site?
+
+  Muchas veces la mejor opción no es descargar un paquete de npm ya que podemos ver la documentación, entender cómo funciona y nosotros implementar el código necesario para nuestro caso, ya que instalar todo el paquete puede volver más pesado nuestro proyecto.
+
+  npm install md5 --save
+
+classname package
+
+    npm install classnames --save
+
+  Este paquete nos va a permitir hacer validaciones segun cambie el estado de nuestro compnenete
