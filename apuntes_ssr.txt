@@ -1,0 +1,23 @@
+Para poder usar Babel en el servidor 
+  npm install @babel/register
+
+Dependencias necesarias
+  npm install express dotenv
+
+Instalación de nodemon 
+  npm install nodemon --dev
+
+Variables de entorno
+  npm install dotenv
+
+
+Hot-middleware y dev-middleware 
+  Nos van a ayudar a todo el proceso de refrescado en tiempo real cuando estamos cargando webpack y cuando hagamos cambios
+    
+    Integración de webpack con express  
+      npm install webpack-dev-middleware webpack-hot-middleware --dev 
+
+    Instalacion de React hot loader
+      npm install react-hot-loader --dev
+
+      Debemos asegurarnos que esté trabajando con babael en el archivo .babelrc

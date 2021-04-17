@@ -1,14 +1,15 @@
 const path = require('path')
+const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports= {
   mode: 'development',
-  entry: './src/index.js',
+  entry: ['./src/frontend/index.js', 'webpack-hot-middleware/client?path=/__webpack_hmt&timeout=2000&reload=true'],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/'
+    filename: 'assets/app.js',
+    publicPath: '/',
   },
   resolve:{
     extensions: ['.js', '.jsx']
@@ -45,7 +46,7 @@ module.exports= {
         test: /\.(png|gif|jpg)$/,
         use: [
           {
-            'loader': 'file-loader',
+            loader: 'file-loader',
             options: {
               name: 'assets/[hash].[exit]'
             }
@@ -58,12 +59,9 @@ module.exports= {
     historyApiFallback: true,
   },
   plugins: [
-    new HtmlWebPackPlugin({
-      template: './public/index.html',
-      filename: './index.html'
-   }),
-   new MiniCssExtractPlugin({
-     filename: 'assets/[name].css'
-    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'assets/app.css',
+     }),
   ]
 }
