@@ -205,4 +205,4 @@ classname package
 
     npm install classnames --save
 
-  Este paquete nos va a permitir hacer validaciones segun cambie el estado de nuestro compnenete
+  Este paquete nos va a permitir hacer validaciones segun cambie el estado de nuestro componenete

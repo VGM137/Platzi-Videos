@@ -1,3 +1,14 @@
+Client Side Rendering (CSR)
+  Es lo habitual, el navegador descarga la aplicación y una vez procesada se presenta. Lo cual puede tomar algún tiempo en suceder y aburrir al usuario.
+     
+Server Side Rendering (SSR)
+  Es un proceso similar, pero entre los datos que envía el servidor hay un pre renderizado de la aplicación en un String el cual se interpreta como HTML para ofrecerle una preview al usuario.
+
+Las ventajas de SSR son:
+  Hace que la primera carga sea mas rapida.
+  Mejora el SEO.
+  Look and Feel --> No pasa de una pantalla en blanco a de repente toda la aplicación, sino que con un primer renderizado se va gradualmente haciendo interactiva.
+
 Para poder usar Babel en el servidor 
   npm install @babel/register
 
@@ -20,4 +31,45 @@ Hot-middleware y dev-middleware
     Instalacion de React hot loader
       npm install react-hot-loader --dev
 
-      Debemos asegurarnos que esté trabajando con babael en el archivo .babelrc
+      Debemos asegurarnos que esté trabajando con babel en el archivo .babelrc
+
+Instalar history y react-router-config
+  npm install react-router
+  npm install history react-router-config
+
+Para que el servidor renderice nuestros estilos debemos Instalar 
+  npm install ignore-styles
+
+Cargo de assets
+  Es un hook que nos va a permitir hacer bind en tiempo real de las rutas a las que vamos a hacer referencia en nuestra aplicación de express.
+    npm install asset-require-hook
+
+Hydrate
+  Si al DOM de React le pasamos el método render despúes de haberle mandado un string desde el servidor en la función renderApp cuando, estaremos renderizando doble pues le mandamos toda la información dos veces.
+  Con el objetivo de no repetir procesos en nuestro proceso de renderizado, ocupar el método .hydrate de ReactDOM, este nos permitará 'hidratar' los eventos
+
+  Para poder hacer accesible la información de un estado inicial de nuestra aplicación sin tener que cargar dos veces con la misma libreria podemos llamar al estado de precarga que mandamos desde el servidor con el método getState() del store que se crea del lado del servidor.
+
+Helmet
+  Es una forma de asegurar nuestro express ocn varias cabeceras o middlewares para proteger nuestra aplicación.
+    
+    npm install helmet
+
+Configuración de webpack para producción
+  en el script build cambiar webpack opr webpack-cli, --mode por --config webpack.config.js y borrar developement, también borrar comando start.
+
+Optimización del build
+  El siguiente paquete nos permitirá crear una configuración para que todos nuestros assets sean comprimidos en formato .gz y puedan tener un peso adecuado al momento de ser cargados en producción
+
+    npm install compression-webpack-plugin --save-dev
+
+  terser-webpack-plugin
+    npm install terser-webpack-plugin --save-dev
+
+webpack-manifast-plugin 
+
+Vendorfiles
+  Con Vendorfiles se pueden abstraer los archivos para separar la lógica que se está programando de los archivos que se están importando en un archivo vendor
+
+Configuración de eslint loader
+  npm install eslint-loader eslint --sav-dev
